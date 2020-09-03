@@ -6,6 +6,9 @@ def pozdrav():
     ime = input( 'Kako ti je ime? ')
     print('Živjo, {}'.format(ime))
 
+
+# Pomožne funkcije za vnos
+
 def izberi(mozni_odgovori):
     for indeks, odgovor in enumerate(mozni_odgovori):
         print('{}) {}'.format(indeks + 1, odgovor))
@@ -42,6 +45,16 @@ def izberi_stolpec(stolpci):
     stolpec = input('> ')
     return int(stolpec) - 1
 
+
+
+def napaka(niz):
+    print('\033[1;91m' + niz + '\033[0m')
+
+def uspeh(niz):
+    print('\033[1;92m' + niz + '\033[0m')
+
+# Glavni meni
+
 def meni():
     while True:
         print('Ali bi rešil(a) sudoku? ')
@@ -53,9 +66,10 @@ def meni():
             print('Škoda, morda pa kdaj drugič. ')
             return False
         else:
-            print('Izberi 1 ali 2. ')
+            napaka('Izberi 1 ali 2. ')
             meni()
 
+# Funkcije 
 
 def izberi_sudoku():
     print('Kakšno stopnjo sudokuja si želiš rešiti? ')
@@ -73,7 +87,8 @@ def izberi_sudoku():
         print('Sam vpiši svoj sudoku.')
         vpisi_sudoku()
     else:
-        assert False
+        napaka('Izberi, kakšen sudoku želiš! Pritisni številko med 1 in 5.')
+        izberi_sudoku()
     sudoku.izpisi()
 
 def vpisi_sudoku():
@@ -96,7 +111,7 @@ def vpisi_se_eno_polje():
     elif izbira == 1:
             resuj_sudoku()
     else:
-        print('Izberi 1 ali 2. ')
+        napaka('Izberi 1 ali 2. ')
         vpisi_se_eno_polje()
 
 
@@ -106,7 +121,7 @@ def resuj_sudoku():
     if nacin == 0:
         sudoku.eksplicitno()
         if sudoku.ali_je_ze_resen():
-            print('Rešili smo sudoku!')
+            uspeh('Rešili smo sudoku!')
             return sudoku.izpisi()
         else:
             print('Poskusi še kak drug način. ')
@@ -114,7 +129,7 @@ def resuj_sudoku():
     elif nacin == 1:
         sudoku.implicitno()
         if sudoku.ali_je_ze_resen():
-            print('Rešili smo sudoku!')
+            uspeh('Rešili smo sudoku!')
             return sudoku.izpisi()
         else:
             print('Poskusi še kak drug način. ')
@@ -122,17 +137,20 @@ def resuj_sudoku():
     elif nacin == 2:
         sudoku.resi()
         if sudoku.resi():
-            print('Rešili smo sudoku!')
+            uspeh('Rešili smo sudoku!')
         else:
-            print('Sudokuja ne znnamo rešiti, izberi lažjo stopnjo ali pa dodaj še kakšno polje. ')
+            napaka('Sudokuja ne znnamo rešiti, izberi lažjo stopnjo ali pa dodaj še kakšno polje. ')
             meni()
     else:
-        assert False
+        napaka('Izberi 1, 2 ali 3.')
+        resuj_sudoku()
     sudoku.izpisi()
     
+# main
 
 def main():
     pozdrav()
     meni()
+
 
 main()
