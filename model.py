@@ -13,6 +13,8 @@
 # s.resi()
 # za rešitev sudokuja ne rabimo posebej klicati s.implicitno() ali s.eksplicitno()
 
+import json
+
 
 class Sudoku:
         
@@ -70,17 +72,10 @@ class Sudoku:
                 [0, 3, 0, 0, 2, 4, 5, 0, 0]
             ]
         elif stopnja == 'lahek':
-            self.puzzle = [
-                [8, 9, 0, 0, 1, 0, 5, 0, 0],
-                [0, 0, 2, 6, 0, 7, 3, 9, 1],
-                [3, 6, 0, 5, 0, 4, 0, 0, 7],
-                [0, 0, 0, 0, 0, 0, 0, 3, 0],
-                [0, 3, 0, 0, 2, 0, 9, 0, 0],
-                [0, 0, 0, 1, 3, 6, 8, 4, 0],
-                [0, 5, 4, 0, 6, 0, 0, 7, 3],
-                [0, 7, 6, 9, 5, 0, 0, 0, 0],
-                [0, 0, 3, 0, 7, 0, 0, 0, 9]
-            ]
+            with open('primer_lahek.json') as f:
+                vsebina = f.read()
+            self.puzzle = vsebina
+            print(self.puzzle)
         else:
             return False
            
