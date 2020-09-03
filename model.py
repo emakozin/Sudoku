@@ -72,10 +72,17 @@ class Sudoku:
                 [0, 3, 0, 0, 2, 4, 5, 0, 0]
             ]
         elif stopnja == 'lahek':
-            with open('primer_lahek.json') as f:
-                vsebina = f.read()
-            self.puzzle = vsebina
-            print(self.puzzle)
+            self.puzzle = [
+                [8, 9, 0, 0, 1, 0, 5, 0, 0],
+                [0, 0, 2, 6, 0, 7, 3, 9, 1],
+                [3, 6, 0, 5, 0, 4, 0, 0, 7],
+                [0, 0, 0, 0, 0, 0, 0, 3, 0],
+                [0, 3, 0, 0, 2, 0, 9, 0, 0],
+                [0, 0, 0, 1, 3, 6, 8, 4, 0],
+                [0, 5, 4, 0, 6, 0, 0, 7, 3],
+                [0, 7, 6, 9, 5, 0, 0, 0, 0],
+                [0, 0, 3, 0, 7, 0, 0, 0, 9]
+            ]
         else:
             return False
            
@@ -87,6 +94,7 @@ class Sudoku:
         for i, vrstica in enumerate(self.puzzle):
             for j, stevilo in enumerate(vrstica):
                 if j % 3 == 0 and j < 8 and j > 0:
+                    
                     print("|", end=' ')
                 print(stevilo, end=' ')
             print()
