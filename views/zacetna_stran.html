@@ -1,0 +1,31 @@
+% rebase('base.html', izbrani_zavihek='sudoku')
+<div class="columns">
+    <div class="column is-one-fifth">
+      <nav class="panel">
+        <p class="panel-heading">
+          <i class="fas fa-exchange-alt"></i>
+          Ali bi rešil sudoku?
+        </p>
+        <div class="panel-block">
+          <form action="/igramo/" method="POST">
+            <div class="field">
+              
+            </div>
+            <div class="field">
+              
+            </div>
+            <div class="field has-addons">
+              <div class="control">
+                
+              </div>
+              <div class="control">
+                <button class="button is-info is-small">Ja</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    
+{{sudoku.puzzle}}
+
+

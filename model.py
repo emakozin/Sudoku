@@ -16,6 +16,8 @@
 import json
 
 
+
+
 class Sudoku:
         
     # program že na začetku naredi matriko v obliki sudokuja s samimi ničlami, tako lahko tudi sami ročno vpisujemo vrednosti
@@ -28,6 +30,8 @@ class Sudoku:
             for j in range(9):
                 row.append(0)
             self.puzzle.append(row)
+        self.izpis = self.izpisi()
+        
     
     def __repr__(self):
         return "Sudoko, napisan po vrsticah: {}".format(self.puzzle)
@@ -35,43 +39,18 @@ class Sudoku:
     # s funkcijo generiraj lahko določimo, kateri sudoku bi radi rešili (razlikujejo se po stopnjah)
     # če kličemo le s.generiraj() bo program prevzel, da mislimo lahek sudoku
     def generiraj(self, stopnja = 'lahek'):
+
         with open('primeri.json') as d:
                 vsebina = d.read()
                 sudoku = json.loads(vsebina)
         if stopnja == 'zelo težek':
-            self.puzzle = [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 4, 6, 0, 0, 2, 0, 5],
-                [0, 0, 0, 0, 1, 5, 8, 0, 0],
-                [0, 9, 0, 0, 4, 0, 0, 1, 0],
-                [2, 0, 0, 0, 0, 0, 9, 7, 0],
-                [1, 4, 0, 0, 8, 0, 0, 0, 0],
-                [8, 6, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 3, 2, 9],
-                [0, 0, 0, 0, 0, 9, 7, 0, 0]
-            ]
+            self.puzzle =  sudoku["zelo tezek"]          
         elif stopnja == 'težek':
-            self.puzzle = [
-                [0, 0, 0, 0, 0, 8, 7, 0, 0],
-                [7, 6, 4, 0, 0, 0, 0, 9, 3],
-                [1, 3, 0, 0, 0, 0, 5, 0, 0],
-                [0, 0, 2, 0, 0, 0, 0, 3, 0],
-                [0, 0, 0, 0, 5, 0, 9, 2, 0],
-                [0, 1, 6, 0, 0, 0, 0, 0, 0],
-                [9, 0, 0, 7, 0, 1, 0, 5, 6],
-                [0, 0, 0, 6, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 7, 0]
-            ]
+            self.puzzle = sudoku["tezek"] 
         elif stopnja == 'srednji':
-            with open('primeri.json') as d:
-                vsebina = d.read()
-            sudoku = json.loads(vsebina)
             self.puzzle = sudoku["srednji"]
-        
-        elif stopnja == 'lahek':
-            
-            self.puzzle = sudoku["lahek"]
-            
+        elif stopnja == 'lahek': 
+            self.puzzle = sudoku["lahek"] 
         else:
             return False
            
@@ -89,7 +68,7 @@ class Sudoku:
             if (i-2) % 3 == 0 and i < 8:
                 print("_____________________", end='')
                 print()
-            print()
+        print()
         
 
     # s funkcijo vpisi_rocno lahhko posamezne števke vpišemo v naš sudoku
