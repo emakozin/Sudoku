@@ -14,20 +14,8 @@
 # za rešitev sudokuja ne rabimo posebej klicati s.implicitno() ali s.eksplicitno()
 
 
-
-
 class Sudoku:
-
-
-    ime = input('Kako ti je ime? ')
-    print('Živjo, {}!'.format(ime))
-    odgovor = input('Ali bi rešil sudoku? ')
-    if odgovor in ['ja', 'da']:
-        stopnja = input('Kakšen sudoku želiš rešiti? ')
-        s.generiraj(stopnja)
-    else:
-        print('Škoda, morda pa drugič. ')
-
+        
     # program že na začetku naredi matriko v obliki sudokuja s samimi ničlami, tako lahko tudi sami ročno vpisujemo vrednosti
     # in rešimo svoj sudoku, če le ni prezahteven
     def  __init__(self):
@@ -45,7 +33,7 @@ class Sudoku:
     # s funkcijo generiraj lahko določimo, kateri sudoku bi radi rešili (razlikujejo se po stopnjah)
     # če kličemo le s.generiraj() bo program prevzel, da mislimo lahek sudoku
     def generiraj(self, stopnja = 'lahek'):
-        if stopnja == 'zelo tezek':
+        if stopnja == 'zelo težek':
             self.puzzle = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 1, 4, 6, 0, 0, 2, 0, 5],
@@ -57,7 +45,7 @@ class Sudoku:
                 [0, 0, 0, 0, 0, 0, 3, 2, 9],
                 [0, 0, 0, 0, 0, 9, 7, 0, 0]
             ]
-        elif stopnja == 'tezek':
+        elif stopnja == 'težek':
             self.puzzle = [
                 [0, 0, 0, 0, 0, 8, 7, 0, 0],
                 [7, 6, 4, 0, 0, 0, 0, 9, 3],
@@ -94,7 +82,8 @@ class Sudoku:
                 [0, 0, 3, 0, 7, 0, 0, 0, 9]
             ]
         else:
-            print('Napiši, kakšno stopnjo želiš.')
+            return False
+           
 
     # funkcija izpisi() izpiše matriko v pravi obliki sudoku, da je bolj pregledno      
     def izpisi(self):
@@ -149,7 +138,6 @@ class Sudoku:
             mozna_st = list(self.preglej_kvadrat(i,j).intersection(self.preglej_vrstico(i)).intersection(self.preglej_stolpec(j)))   #TREBA POPRAVITI!!!L
         else: 
             mozna_st = [self.puzzle[i][j]]
-            print('Polje je že izpoljnjeno!')
         return mozna_st
 
     # EKSPLICITNI PRISTOP
@@ -158,7 +146,6 @@ class Sudoku:
 
     def eksplicitno_resi(self, i ,j):
         if self.puzzle[i][j] == 0 and len(self.dobi_mozna_stevila(i, j)) == 1:
-                print('Našli smo novo številko na mestu ({}, {})!'.format(i, j))
                 self.puzzle[i][j] = self.dobi_mozna_stevila(i, j)[0]
    
     # zgornja funkcija izpolni dano prazno polje na eksplicitni način, če je mogoče
@@ -170,12 +157,11 @@ class Sudoku:
         while not self.ali_je_ze_resen():
             ponovitve += 1
             if ponovitve > 5:
-                print('Poskusi še implicitno.')
-                break
+                return False
             for i in range(9):
                 for j in range(9):
                     self.eksplicitno_resi(i, j)
-        return self.puzzle
+        return self.ali_je_ze_resen()
     
 
 
@@ -196,7 +182,7 @@ class Sudoku:
                       vrst_mozna.append(vrednost)
         if len(set(self.dobi_mozna_stevila(i, j)) - set(vrst_mozna)) == 1:
             self.puzzle[i][j] = list(set(self.dobi_mozna_stevila(i, j)) - set(vrst_mozna))[0]
-            print('Našli številko glede na vrstico na mestu ({}, {}).'.format(i, j))
+            
             
     def implicitno_stolpec(self, i, j):
         stolp_mozna = []
@@ -208,7 +194,7 @@ class Sudoku:
                     stolp_mozna.append(vrednost)
         if len(set(self.dobi_mozna_stevila(i, j)) - set(stolp_mozna)) == 1:
             self.puzzle[i][j] = list(set(self.dobi_mozna_stevila(i, j)) - set(stolp_mozna))[0]
-            print('Našli številko glede na stolpec na mestu ({}, {}).'.format(i, j))
+            
         
     def implicitno_kvadrat(self, i, j):
         kvadrat_mozna = []
@@ -222,7 +208,7 @@ class Sudoku:
                         kvadrat_mozna.append(vrednost)
         if len(set(self.dobi_mozna_stevila(i, j)) - set(kvadrat_mozna)) == 1:
             self.puzzle[i][j] = list(set(self.dobi_mozna_stevila(i, j)) - set(kvadrat_mozna))[0]
-            print('Našli številko glede na kvadrat na mestu ({}, {}).'.format(i, j))
+            
 
     # zgornje 3 funkcije združimo, da lahko pregledujemo polje glede na vse tri - vrstico, stolpec in kvadrat
     def implicitno_resi(self, i, j):
@@ -238,12 +224,11 @@ class Sudoku:
         while not self.ali_je_ze_resen():
             ponovitve += 1
             if ponovitve > 5:
-                print('Poskusi še eksplicitno.')
-                break
+                return False
             for i in range(9):
                 for j in range(9):
                     self.implicitno_resi(i,j)
-        return self.puzzle
+        return True
 
 
 
@@ -257,24 +242,19 @@ class Sudoku:
         if stevilo_praznih == 0:
             return True
         else:
-            print('Sudoku še ni rešen, praznih polj je še:', stevilo_praznih)
             return False
 
     # funkcija resi() združi oba pristopa in reši sudoku, če le lahko
     # če ga ne zna rešiti, nam pa to izpiše
     def resi(self):
         ponovitve = 0
-        while ponovitve < 30 or not self.ali_je_ze_resen():
+        while ponovitve < 5:
             self.eksplicitno()
             self.implicitno()
             ponovitve += 1
-        if self.ali_je_ze_resen():
-            print('Rešili smo sudoku!')
+        return self.ali_je_ze_resen()
             
-        else:
-            print('Sudokuja ne znamo rešiti, prišli smo do:')
-        return self.puzzle 
-
+        
 
 
     
