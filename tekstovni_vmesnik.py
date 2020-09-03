@@ -2,10 +2,6 @@ from model import Sudoku
 
 sudoku = Sudoku()
 
-def pozdrav():
-    ime = input( 'Kako ti je ime? ')
-    print('Živjo, {}'.format(ime))
-
 
 # Pomožne funkcije za vnos
 
@@ -53,10 +49,20 @@ def napaka(niz):
 def uspeh(niz):
     print('\033[1;92m' + niz + '\033[0m')
 
+def krepko(niz):
+    return f'\033[1m{niz}\033[0m'
 # Glavni meni
 
 def meni():
     while True:
+        print(80 * '=')
+        print()
+        print(krepko('POZDRAVLJENI V REŠEVALCU SUDOKUJEV!!'))
+        print()
+        print(80 * '=')
+        print('Za izhod pritisnite Ctrl + C.')
+        print(80 * '-')
+        print()
         print('Ali bi rešil(a) sudoku? ')
         izbira = izberi(['ja', 'ne'])
         if izbira == 0:
@@ -72,6 +78,7 @@ def meni():
 # Funkcije 
 
 def izberi_sudoku():
+    print(80 * '-')
     print('Kakšno stopnjo sudokuja si želiš rešiti? ')
     stopnja = izberi_stopnjo(['lahek', 'srednji', 'težek', 'zelo težek', 'prazen'])
     if stopnja == 0:
@@ -92,6 +99,7 @@ def izberi_sudoku():
     sudoku.izpisi()
 
 def vpisi_sudoku():
+    print(80 * '-')
     print('Izberi vrednost in polje, ki ga želiš napolniti')
     print('Vrednost:')
     vrednost = izberi_vrednost([i for i in range(1,10)])
@@ -104,6 +112,7 @@ def vpisi_sudoku():
 
 
 def vpisi_se_eno_polje():
+    print(80 * '-')
     print('Ali želiš vpisati še kakšno polje? ')
     izbira = izberi(['ja', 'ne'])
     if izbira == 0:
@@ -116,45 +125,54 @@ def vpisi_se_eno_polje():
 
 
 def resuj_sudoku():
+    print(80 * '-')
     print('Na kakšen način bi ga rad rešil? ')
     nacin = izberi_nacin(['eksplicitno', 'implicitno', 'oboje', 'dodaj novo številko', 'izberi drug sudoku'])
     if nacin == 0:
         sudoku.eksplicitno()
         if sudoku.ali_je_ze_resen():
+            print(80 * '-')
             uspeh('Rešili smo sudoku!')
-            return sudoku.izpisi()
+            sudoku.izpisi()
+            uspeh(krepko('Zmaga!'))
+
         else:
-            print('Poskusi še kak drug način. ')
+            napaka('Poskusi še kak drug način. ')
             resuj_sudoku()
     elif nacin == 1:
         sudoku.implicitno()
         if sudoku.ali_je_ze_resen():
+            print(80 * '-')
             uspeh('Rešili smo sudoku!')
-            return sudoku.izpisi()
+            sudoku.izpisi()
+            uspeh(krepko('Zmaga!'))
         else:
-            print('Poskusi še kak drug način. ')
+            napaka('Poskusi še kak drug način. ')
+            sudoku.izpisi()
             resuj_sudoku()
     elif nacin == 2:
         sudoku.resi()
         if sudoku.resi():
+            print(80 * '-')
+
             uspeh('Rešili smo sudoku!')
+            sudoku.izpisi()
+            uspeh(krepko('Zmaga!'))
         else:
             napaka('Sudokuja ne znamo rešiti, izberi lažjo stopnjo ali pa dodaj še kakšno polje. ')
+            sudoku.izpisi()
             resuj_sudoku()
     elif nacin == 3:
         vpisi_se_eno_polje()
     elif nacin == 4:
         izberi_sudoku()
+        resuj_sudoku()
     else:
         napaka('Izberi 1, 2 ali 3.')
         resuj_sudoku()
-    sudoku.izpisi()
+    
     
 # main
 
-def main():
-    pozdrav()
-    meni()
 
-
-main()
+meni()

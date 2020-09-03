@@ -79,7 +79,6 @@ class Sudoku:
     # funkcija izpisi() izpiše matriko v pravi obliki sudoku, da je bolj pregledno      
     def izpisi(self):
         print()
-        print()
         for i, vrstica in enumerate(self.puzzle):
             for j, stevilo in enumerate(vrstica):
                 if j % 3 == 0 and j < 8 and j > 0:
@@ -91,7 +90,7 @@ class Sudoku:
                 print("_____________________", end='')
                 print()
             print()
-        print()
+        
 
     # s funkcijo vpisi_rocno lahhko posamezne števke vpišemo v naš sudoku
     # par(i, j) predstavlja mesto, ki ga hočemo izpolniti
