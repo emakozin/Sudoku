@@ -25,7 +25,7 @@ def izberi_nacin(nacini):
     for indeks, odgovor in enumerate(nacini):
         print('{}) {}'.format(indeks + 1, odgovor))
     nacin = input('> ')
-    return int(nacin) - 1
+    return int(float(nacin)) - 1
 
 def izberi_vrednost(vrednosti):
     for indeks, odgovor in enumerate(vrednosti):
