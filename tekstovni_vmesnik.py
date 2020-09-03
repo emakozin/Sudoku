@@ -12,38 +12,38 @@ def pozdrav():
 def izberi(mozni_odgovori):
     for indeks, odgovor in enumerate(mozni_odgovori):
         print('{}) {}'.format(indeks + 1, odgovor))
-    izbira = input('> ')
-    return int(izbira) - 1
+    izbira = int(input('> '))
+    return izbira - 1
 
 def izberi_stopnjo(stopnje):
     for indeks, odgovor in enumerate(stopnje):
         print('{}) {}'.format(indeks + 1, odgovor))
     stopnja = input('> ')
-    return int(stopnja) - 1
+    return int(float(stopnja)) - 1
 
 def izberi_nacin(nacini):
     for indeks, odgovor in enumerate(nacini):
         print('{}) {}'.format(indeks + 1, odgovor))
-    nacin = input('> ')
-    return int(float(nacin)) - 1
+    nacin = int(input('> '))
+    return nacin - 1
 
 def izberi_vrednost(vrednosti):
     for indeks, odgovor in enumerate(vrednosti):
         print('{}) {}'.format(indeks + 1, odgovor))
     vrednost = input('> ')
-    return int(vrednost) - 1
+    return int(float(vrednost)) - 1
 
 def izberi_vrstico(vrstice):
     for indeks, odgovor in enumerate(vrstice):
         print('{}) {}'.format(indeks + 1, odgovor))
     vrstica = input('> ')
-    return int(vrstica) - 1
+    return int(float(vrstica)) - 1
 
 def izberi_stolpec(stolpci):
     for indeks, odgovor in enumerate(stolpci):
         print('{}) {}'.format(indeks + 1, odgovor))
     stolpec = input('> ')
-    return int(stolpec) - 1
+    return int(float(stolpec)) - 1
 
 
 
@@ -117,7 +117,7 @@ def vpisi_se_eno_polje():
 
 def resuj_sudoku():
     print('Na kakšen način bi ga rad rešil? ')
-    nacin = izberi_nacin(['eksplicitno', 'implicitno', 'oboje'])
+    nacin = izberi_nacin(['eksplicitno', 'implicitno', 'oboje', 'dodaj novo številko', 'izberi drug sudoku'])
     if nacin == 0:
         sudoku.eksplicitno()
         if sudoku.ali_je_ze_resen():
@@ -139,8 +139,12 @@ def resuj_sudoku():
         if sudoku.resi():
             uspeh('Rešili smo sudoku!')
         else:
-            napaka('Sudokuja ne znnamo rešiti, izberi lažjo stopnjo ali pa dodaj še kakšno polje. ')
-            meni()
+            napaka('Sudokuja ne znamo rešiti, izberi lažjo stopnjo ali pa dodaj še kakšno polje. ')
+            resuj_sudoku()
+    elif nacin == 3:
+        vpisi_se_eno_polje()
+    elif nacin == 4:
+        izberi_sudoku()
     else:
         napaka('Izberi 1, 2 ali 3.')
         resuj_sudoku()

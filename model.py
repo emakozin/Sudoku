@@ -35,6 +35,9 @@ class Sudoku:
     # s funkcijo generiraj lahko določimo, kateri sudoku bi radi rešili (razlikujejo se po stopnjah)
     # če kličemo le s.generiraj() bo program prevzel, da mislimo lahek sudoku
     def generiraj(self, stopnja = 'lahek'):
+        with open('primeri.json') as d:
+                vsebina = d.read()
+                sudoku = json.loads(vsebina)
         if stopnja == 'zelo težek':
             self.puzzle = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -66,9 +69,7 @@ class Sudoku:
             self.puzzle = sudoku["srednji"]
         
         elif stopnja == 'lahek':
-            with open('primeri.json') as d:
-                vsebina = d.read()
-            sudoku = json.loads(vsebina)
+            
             self.puzzle = sudoku["lahek"]
             
         else:
