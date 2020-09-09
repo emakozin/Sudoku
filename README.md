@@ -10,6 +10,3 @@ Eksplicitni način reševanja deluje tako, da računalnik pogleda, katera števi
 
 Ko pa uporabljamo implicitni način, pa računalnik pregleduje tudi vsa druga polja v isti vrstici, stolpcu ali kvadratu. Če ugotovi, da je lahko neko število mogoče le v enem polju v celotni vrstici, stolpcu ali kvadratu, ga bo v to polje vneslo.
 
-## Uporaba
-
-Program 
